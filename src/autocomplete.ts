@@ -916,14 +916,14 @@ export default class Autocomplete {
         for (let i = 0; i < lengthToUse; i += 1) {
             const entry: any = this.filteredSource[i];
             const callbackResponse = checkCallback && this.triggerOptionCallback('onItemRender', [entry]);
-            const itemContent = typeof callbackResponse === 'string' ? callbackResponse : entry.label;
+            const itemContent = typeof callbackResponse === 'string' ? callbackResponse : escapeHtml(entry.label);
             const disabled: boolean = !!(entry.disabled || (entry.element && entry.element.disabled));
             // omit the aria-selected attribute from non-selectable options
             const ariaSelected = !disabled ? ' aria-selected="false"' : '';
             toShow.push(
                 `<li tabindex="-1"${ariaSelected} role="option" class="${optionClassName}" ` +
                     `aria-disabled="${disabled}" id="${optionId}--${i}" aria-posinset="${i + 1}" ` +
-                    `aria-setsize="${lengthToUse}">${escapeHtml(itemContent)}</li>`
+                    `aria-setsize="${lengthToUse}">${itemContent}</li>`
             );
         }
 
